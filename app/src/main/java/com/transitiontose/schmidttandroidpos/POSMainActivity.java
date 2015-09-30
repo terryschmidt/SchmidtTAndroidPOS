@@ -8,7 +8,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import android.view.View.*;
 import android.view.*;
-import android.widget.AdapterView.*;
+
+// CSC472, Fall 2015, Terry Schmidt
 
 public class POSMainActivity extends Activity {
 
@@ -60,7 +61,6 @@ public class POSMainActivity extends Activity {
             v.setOnClickListener(btnClick);
         }
 
-        // new stuff
         itemField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
