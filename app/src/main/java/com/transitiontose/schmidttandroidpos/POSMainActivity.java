@@ -1,14 +1,14 @@
 package com.transitiontose.schmidttandroidpos;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.app.*;
+import android.content.Context;
+import android.os.*;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import android.view.View.*;
 import android.view.*;
-import android.os.*;
-import android.app.*;
+import android.widget.AdapterView.*;
 
 public class POSMainActivity extends Activity {
 
@@ -26,6 +26,12 @@ public class POSMainActivity extends Activity {
             "Garlic Bread", "Hot Dog", "Ice Cream", "Jambalaya", "Kale", "Lamb Chops",
             "Mushrooms", "Nuts", "Omelette", "Panini", "Quiche", "Rice", "Sub Sandwich",
             "Trout", "Ugli", "Vegetables", "Waffles", "Xigua", "Yams", "Zucchini"
+    };
+    static final Double[] foodPrices = new Double[] {
+            15.00, 4.00, 6.00, 3.00, 3.00, 2.00,
+            3.00, 2.50, 1.00, 17.00, 3.00, 19.00,
+            2.00, 1.00, 7.00, 7.00, 4.00, 3.00, 5.00,
+            16.00, 3.00, 4.00, 8.00, 2.00, 2.00, 2.00
     };
 
     @Override
@@ -53,6 +59,28 @@ public class POSMainActivity extends Activity {
             View v = (View) findViewById(id);
             v.setOnClickListener(btnClick);
         }
+
+        // new stuff
+        itemField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(itemField.getWindowToken(), 0);
+
+                    String textUserEntered = itemField.getText().toString();
+                    for (int i = 0; i < foods.length; i++) {
+                        if (foods[i].equals(textUserEntered)) {
+                            unitPriceField.setText(foodPrices[i].toString());
+                            handled = true;
+                            return handled;
+                        }
+                    }
+                }
+                return handled;
+            }
+        });
     }
 
     private class ButtonClickListener implements OnClickListener {
