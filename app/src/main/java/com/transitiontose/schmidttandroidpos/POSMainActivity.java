@@ -66,14 +66,13 @@ public class POSMainActivity extends Activity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(itemField.getWindowToken(), 0);
-
                     String textUserEntered = itemField.getText().toString();
                     for (int i = 0; i < foods.length; i++) {
                         if (foods[i].equals(textUserEntered)) {
                             unitPriceField.setText(foodPrices[i].toString());
                             handled = true;
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(itemField.getWindowToken(), 0);
                             return handled;
                         }
                     }
